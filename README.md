@@ -6,5 +6,5 @@ There is an Envato item that uses this design.<br/>
 
 <a href='https://codecanyon.net/item/blog-app-ui-template-for-xamarin-forms/38527340'>https://codecanyon.net/item/blog-app-ui-template-for-xamarin-forms/38527340</a><br/>
 
-<a href='https://codecanyon.net/item/blog-app-ui-template-for-xamarin-forms/38527340'><img src='https://res.cloudinary.com/dqwntkvge/image/upload/v1658521768/inline_preview.png'/></a>
+<a href='https://codecanyon.net/item/blog-app-ui-template-for-xamarin-forms/38527340'><img src='https://res.cloudinary.com/dqwntkvge/image/upload/v1658522363/inline_preview_blog.png'/></a>
  
