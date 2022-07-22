@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="BlogTemplate.Views.HomePage"
+    xmlns:vm="clr-namespace:BlogTemplate.ViewModels"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:model="clr-namespace:BlogTemplate.Models"
+    xmlns:md="clr-namespace:BlogTemplate.MaterialDesign"
+    xmlns:ctrl="clr-namespace:BlogTemplate.Controls"
+    xmlns:custom="clr-namespace:BlogTemplate.CustomViews"
+    xmlns:template="clr-namespace:BlogTemplate.ControlTemplates"
+    xmlns:res="clr-namespace:BlogTemplate.Resources"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    ios:Page.UseSafeArea="true"
+    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+        Light={StaticResource BackgroundColorLight}}"
+    Title="{x:Static res:AppResources.YourBrand}">
+
+    <Shell.SearchHandler>
+
+        <ctrl:PostSearchHandler Placeholder="{x:Static res:AppResources.EnterSearchTerm}"
+                                ShowsResults="true">
+
+            <ctrl:PostSearchHandler.ItemTemplate>
+
+                <DataTemplate>
+
+                    <Label Text="{Binding Title}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           VerticalTextAlignment="Center"
+                           Padding="8" />
+
+                </DataTemplate>
+
+            </ctrl:PostSearchHandler.ItemTemplate>
+
+        </ctrl:PostSearchHandler>
+
+    </Shell.SearchHandler>
+
+    <ContentView Padding="8">
+
+        <CollectionView ItemsSource="{Binding Posts}"
+                        SelectionMode="None"
+                        ItemsLayout="VerticalGrid, 1"
+                        x:DataType="vm:HomeViewModel">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+                    <custom:PostCard />
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.Header>
+
+                <Grid ColumnDefinitions="*, *"
+                        RowDefinitions="92, *, *"
+                        Padding="8"
+                        ColumnSpacing="16"
+                        RowSpacing="16">
+
+                    <CollectionView Grid.ColumnSpan="2"
+                                    ItemsSource="{Binding Categories}"
+                                    SelectionMode="None"
+                                    HorizontalScrollBarVisibility="Never">
+
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <ContentView Padding="0,0,16,0">
+
+                                    <StackLayout x:DataType="model:Category">
+
+                                        <pv:PancakeView CornerRadius="35, 35, 35, 35"
+                                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                                                            Dark={StaticResource CardColorDark}}"
+                                                        WidthRequest="70"
+                                                        HeightRequest="70">
+
+                                            <Image Margin="16"
+                                                   HorizontalOptions="FillAndExpand"
+                                                   VerticalOptions="FillAndExpand">
+
+                                                <Image.Source>
+
+                                                    <FontImageSource Glyph="{Binding Image}"
+                                                                     FontFamily="Material"
+                                                                     Color="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                                                        Dark={StaticResource PrimaryColorDark}}"
+                                                                     Size="120"/>
+
+                                                </Image.Source>
+
+                                            </Image>
+
+                                        </pv:PancakeView>
+
+                                        <Label Text="{Binding Name}"
+                                               Style="{StaticResource SmallPrimaryLabelStyle}"
+                                               MaxLines="1"
+                                               LineBreakMode="TailTruncation"
+                                               HorizontalTextAlignment="Center"/>
+
+                                        <StackLayout.GestureRecognizers>
+
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                  Command="{Binding Source={RelativeSource
+                                                                        AncestorType={x:Type vm:HomeViewModel}}, Path=CategoryCommand}"		
+                                                                  CommandParameter="{Binding .}" />
+
+                                        </StackLayout.GestureRecognizers>
+
+                                    </StackLayout>
+
+                                </ContentView>
+
+                            </DataTemplate>
+
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+
+                    <template:FeaturedPostCard Grid.Row="1"
+                                               Grid.ColumnSpan="2"
+                                               Item="{Binding FirstPost}"
+                                               FetchCommand="{Binding Source={RelativeSource Self}, Path=Item.PostCommand}"
+                                               ControlTemplate="{StaticResource FeaturedPostCardControlTemplate}"/>
+
+                    <template:FeaturedPostCard Grid.Row="2"
+                                               Item="{Binding SecondPost}"
+                                               FetchCommand="{Binding Source={RelativeSource Self}, Path=Item.PostCommand}"
+                                               ControlTemplate="{StaticResource FeaturedPostCardControlTemplate}"/>
+
+                    <template:FeaturedPostCard Grid.Row="2"
+                                               Grid.Column="1"
+                                               Item="{Binding ThirdPost}"
+                                               FetchCommand="{Binding Source={RelativeSource Self}, Path=Item.PostCommand}"
+                                               ControlTemplate="{StaticResource FeaturedPostCardControlTemplate}"/>
+
+                </Grid>
+
+            </CollectionView.Header>
+
+            <CollectionView.EmptyView>
+
+                <Grid RowDefinitions="Auto, *, Auto">
+
+                    <ContentView />
+
+                    <StackLayout Padding="30"
+                                 Spacing="10"
+                                 Grid.Row="1"
+                                 VerticalOptions="Center">
+
+                        <Label Text="{x:Static res:AppResources.NoItems}"
+                               Style="{StaticResource MediumSecondaryLabelStyle}"
+                               HorizontalTextAlignment="Center" />
+
+                        <Image Margin="20">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Static md:Icons.Search}"
+                                                 FontFamily="Material"
+                                                 Color="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                                    Dark={StaticResource SecondaryTextColorDark}}"
+                                                 Size="120" />
+                            </Image.Source>
+                        </Image>
+
+                    </StackLayout>
+
+                    <ContentView Grid.Row="2" />
+
+                </Grid>
+
+            </CollectionView.EmptyView>
+
+        </CollectionView>
+
+    </ContentView>
+
+</ContentPage>

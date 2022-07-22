@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlogTemplate.Views.PostDetailPage"
+             xmlns:vm="clr-namespace:BlogTemplate.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:BlogTemplate.MaterialDesign"
+             xmlns:converter="clr-namespace:BlogTemplate.Converters"
+             xmlns:res="clr-namespace:BlogTemplate.Resources"
+             xmlns:custom="clr-namespace:BlogTemplate.CustomViews"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:template="clr-namespace:BlogTemplate.ControlTemplates" xmlns:model="clr-namespace:BlogTemplate.Models"
+             ios:Page.UseSafeArea="true"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}">
+
+    <ContentPage.Resources>
+        <converter:MediumDateConverter x:Key="MediumDateConverter"/>
+        <converter:BookmarkConverter x:Key="BookmarkConverter"/>
+    </ContentPage.Resources>
+
+    <RelativeLayout>
+
+        <ScrollView RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}">
+
+            <StackLayout Spacing="16">
+
+                <pv:PancakeView CornerRadius="0, 0, 20, 20">
+
+                    <Grid RowDefinitions="90,*,90"
+                          ColumnDefinitions="90,*,90"
+                          HeightRequest="{Binding Source={RelativeSource Self}, Path=Width}">
+
+                        <CarouselView Grid.RowSpan="3"
+                                      Grid.ColumnSpan="3"
+                                      IndicatorView="imagesIndicator"
+                                      ItemsSource="{Binding Images}"
+                                      HorizontalScrollBarVisibility="Never"
+                                      CurrentItemChangedCommand="{Binding ImageChangedCommand}"
+                                      CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
+
+                            <CarouselView.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <Image Source="{Binding .}"
+                                           Aspect="AspectFill">
+
+                                        <Image.GestureRecognizers>
+
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                  Command="{Binding Source={RelativeSource
+                                                                    AncestorType={x:Type vm:PostDetailViewModel}}, Path=PhotoCommand}" />
+
+                                        </Image.GestureRecognizers>
+
+                                    </Image>
+
+                                </DataTemplate>
+
+                            </CarouselView.ItemTemplate>
+
+                        </CarouselView>
+
+                        <IndicatorView x:Name="imagesIndicator"
+                                       IndicatorColor="DarkGray"
+                                       SelectedIndicatorColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                            Dark={StaticResource PrimaryColorDark}}"
+                                       Grid.Column="1"
+                                       Grid.Row="2"
+                                       Margin="10" />
+
+                        <pv:PancakeView Grid.Column="0"
+                            CornerRadius="25,25,25,25"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            BackgroundColor="#60000000"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                        
+                            <Label x:FieldModifier="public"
+                                   Text="{Binding IsBookmarked, Converter={StaticResource BookmarkConverter}}"
+                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                        Dark={StaticResource PrimaryColorDark}}"
+                                   FontFamily="Material"
+                                   FontSize="30"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <pv:PancakeView.GestureRecognizers>
+
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Command="{Binding BookmarkCommand}" />
+
+                            </pv:PancakeView.GestureRecognizers>
+
+                        </pv:PancakeView>
+
+                        <pv:PancakeView Grid.Row="2" Grid.Column="2"
+                            CornerRadius="25,25,25,25"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            BackgroundColor="#60000000"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                        
+                            <Label x:FieldModifier="public"
+                                   Text="{x:Static md:Icons.Share}"
+                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                        Dark={StaticResource PrimaryColorDark}}"
+                                   FontFamily="Material"
+                                   FontSize="30"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <pv:PancakeView.GestureRecognizers>
+
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Command="{Binding ShareCommand}" />
+
+                            </pv:PancakeView.GestureRecognizers>
+
+                        </pv:PancakeView>
+
+                    </Grid>
+
+                </pv:PancakeView>
+
+                <Label Text="{Binding Title}"
+                       Style="{StaticResource BoldTitlePrimaryLabelStyle}"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="Center"
+                       Padding="15, 0, 15, 0" />
+
+                <Label FontSize="Medium"
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                            Dark={StaticResource PrimaryColorDark}}"
+                        HorizontalOptions="EndAndExpand"
+                        Margin="15, 0, 15, 0">
+
+                    <Label.Text>
+                        <MultiBinding StringFormat="By {0} | {1}">
+                            <Binding Path="AuthorName"/>
+                            <Binding Path="DateGmt" Converter="{StaticResource MediumDateConverter}"/>
+                        </MultiBinding>
+                    </Label.Text>
+
+                </Label>
+
+                <Label Text="{Binding Content}"
+                       Style="{StaticResource SmallSecondaryLabelStyle}"
+                       Margin="15, 0, 15, 0" />
+
+                <Label Text="{x:Static res:AppResources.RecentComment}"
+                       Style="{StaticResource BoldMediumPrimaryLabelStyle}"
+                       IsVisible="{Binding HasRecentComment}"
+                       Margin="15, 0, 15, 0" />
+
+                <pv:PancakeView CornerRadius="20,20,20,20"
+                                Margin="15, 0, 15, 0"
+                                IsVisible="{Binding HasRecentComment}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                                    Dark={StaticResource CardColorDark}}">
+
+                    <StackLayout Padding="10">
+
+                        <Label Text="{Binding RecentComment.Content, StringFormat='&quot;{0}&quot;'}"
+                                FontAttributes="Italic"
+                                Style="{StaticResource SmallSecondaryLabelStyle}"/>
+
+                        <Label Style="{StaticResource SmallSecondaryLabelStyle}">
+                            <Label.Text>
+                                <MultiBinding StringFormat="- {0} | {1}">
+                                    <Binding Path="RecentComment.UserFullName"/>
+                                    <Binding Path="RecentComment.DateGmt" Converter="{StaticResource MediumDateConverter}"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+
+                    </StackLayout>
+
+                </pv:PancakeView>
+
+                <template:ChicButton Text="{x:Static res:AppResources.ShowComments}"
+                                     Icon="{x:Static md:Icons.Comment}"
+                                     FetchCommand="{Binding CommentsCommand}"
+                                     ControlTemplate="{StaticResource ChicButtonControlTemplate}"
+                                     Margin="15, 0, 15, 0"/>
+
+                <Label Text="{x:Static res:AppResources.RelatedPosts}"
+                       Style="{StaticResource BoldMediumPrimaryLabelStyle}"
+                       Margin="15, 0, 15, 5" />
+
+                <CollectionView ItemsSource="{Binding RelatedItems}"
+                                SelectionMode="None"
+                                HeightRequest="180"
+                                Margin="15,0,15,15"
+                                HorizontalScrollBarVisibility="Never">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <custom:RelatedPostCard/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </StackLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</ContentPage>

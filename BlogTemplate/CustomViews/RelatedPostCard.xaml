@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="BlogTemplate.CustomViews.RelatedPostCard"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:md="clr-namespace:BlogTemplate.MaterialDesign"
+    xmlns:vm="clr-namespace:BlogTemplate.ViewModels"
+    xmlns:converters="clr-namespace:BlogTemplate.Converters"
+    xmlns:model="clr-namespace:BlogTemplate.Models"
+    x:DataType="model:Post"
+    Padding="0,0,15,0">
+
+    <ContentView.Resources>
+        <converters:MediumDateConverter x:Key="MediumDateConverter"/>
+    </ContentView.Resources>
+
+    <pv:PancakeView CornerRadius="20, 20, 20, 20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                        Dark={StaticResource CardColorDark}}"
+                    WidthRequest="180">
+
+        <Grid RowDefinitions="*, *, *"
+              ColumnDefinitions="*, *, *"
+              ColumnSpacing="0"
+              RowSpacing="0"
+              VerticalOptions="FillAndExpand">
+
+            <Image Grid.RowSpan="3"
+                   Grid.ColumnSpan="3"
+                   Source="{Binding FirstImage}"
+                   Aspect="AspectFill"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"/>
+
+            <Label Text="{x:Static md:Icons.Bookmark}"
+                   IsVisible="{Binding IsBookmarked}"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                        Dark={StaticResource PrimaryColorDark}}"
+                   FontFamily="Material"
+                   FontSize="25"
+                   VerticalTextAlignment="Start"
+                   HorizontalTextAlignment="Start"
+                   Margin="10"/>
+
+            <StackLayout Grid.Row="1"
+                         Grid.RowSpan="2"
+                         Grid.ColumnSpan="3"
+                         Padding="10"
+                         Spacing="2"
+                         VerticalOptions="EndAndExpand"
+                         BackgroundColor="#50000000">
+
+                <Label Text="{Binding Title}"
+                       Style="{StaticResource BoldSmallLabelStyle}"
+                       TextColor="White"
+                       MaxLines="1"
+                       LineBreakMode="TailTruncation"/>
+
+                <Label Text="{Binding DateGmt, Converter={StaticResource MediumDateConverter}}"
+                       Style="{StaticResource SmallLabelStyle}"
+                       TextColor="White"
+                       MaxLines="1"/>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static md:Icons.Comment}"
+                           FontFamily="Material"
+                           FontSize="Medium"
+                           TextColor="White"/>
+
+                    <Label Text="{Binding CommentsCount}"
+                           Style="{StaticResource SmallLabelStyle}"
+                           TextColor="White"
+                           MaxLines="1"/>
+
+                    <Label Text="{x:Static md:Icons.Bookmark}"
+                           FontFamily="Material"
+                           FontSize="Medium"
+                           TextColor="White"/>
+
+                    <Label Text="{Binding BookmarksCount}"
+                           Style="{StaticResource SmallLabelStyle}"
+                           TextColor="White"
+                           MaxLines="1"/>
+
+                </StackLayout>
+
+            </StackLayout>
+
+        </Grid>
+
+        <pv:PancakeView.GestureRecognizers>
+
+            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                  Command="{Binding Source={RelativeSource
+                                    AncestorType={x:Type vm:PostDetailViewModel}},
+                                    Path=RelatedItemCommand}"
+                                  CommandParameter="{Binding .}" />
+
+        </pv:PancakeView.GestureRecognizers>
+
+    </pv:PancakeView>
+
+</ContentView>

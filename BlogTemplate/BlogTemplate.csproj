@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="CarouselView.FormsPlugin" Version="6.0.0" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="DataStore\" />
+    <None Remove="DataStores\MockDateStore\" />
+    <None Remove="Fonts\" />
+    <None Remove="Fonts\MaterialIcons-Regular.ttf" />
+    <None Remove="MaterialDesign\" />
+    <None Remove="Views\" />
+    <None Remove="ViewModels\" />
+    <None Remove="Resources\" />
+    <None Remove="CarouselView.FormsPlugin" />
+    <None Remove="Xamarin.Forms.PancakeView" />
+    <None Remove="Themes\" />
+    <None Remove="ControlTemplates\" />
+    <None Remove="Controls\" />
+    <None Remove="Converters\" />
+    <None Remove="CustomViews\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataStores\" />
+    <Folder Include="DataStores\MockDateStore\" />
+    <Folder Include="Fonts\" />
+    <Folder Include="MaterialDesign\" />
+    <Folder Include="Views\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Themes\" />
+    <Folder Include="ControlTemplates\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Converters\" />
+    <Folder Include="CustomViews\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\MaterialIcons-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\AppResources.Designer.cs">
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PhotoBrowserPage.xaml.cs">
+      <DependentUpon>PhotoBrowserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PostDetailPage.xaml.cs">
+      <DependentUpon>PostDetailPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
