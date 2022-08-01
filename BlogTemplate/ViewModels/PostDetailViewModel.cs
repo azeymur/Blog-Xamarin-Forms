@@ -108,7 +108,7 @@ namespace BlogTemplate.ViewModels
 
             ImageChangedCommand = new Command<string>((i) => currentImage = i);
 
-            PhotoCommand = new Command(OnPhotoTapped);
+            PhotoCommand = new Command(() => { });
 
             BookmarkCommand = new Command(OnBookmarkTapped);
 
@@ -147,13 +147,6 @@ namespace BlogTemplate.ViewModels
 
             foreach (var post in relatedItems)
                 RelatedItems.Add(post);
-        }
-
-        async void OnPhotoTapped()
-        {
-            await Shell.Current.GoToAsync($"{nameof(PhotoBrowserPage)}" +
-                                          $"?{nameof(PhotoBrowserViewModel.ParamImages)}={string.Join(",", Images)}" +
-                                          $"&{nameof(PhotoBrowserViewModel.Image)}={currentImage}");
         }
 
         async void OnRelatedItemTapped(Post item)

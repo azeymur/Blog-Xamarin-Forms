@@ -55,9 +55,6 @@
     <Compile Update="Resources\AppResources.Designer.cs">
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\PhotoBrowserPage.xaml.cs">
-      <DependentUpon>PhotoBrowserPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\PostDetailPage.xaml.cs">
       <DependentUpon>PostDetailPage.xaml</DependentUpon>
     </Compile>

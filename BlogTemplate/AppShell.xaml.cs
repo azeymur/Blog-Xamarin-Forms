@@ -9,7 +9,6 @@ namespace BlogTemplate
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(PhotoBrowserPage), typeof(PhotoBrowserPage));
             Routing.RegisterRoute(nameof(PostDetailPage), typeof(PostDetailPage));
             Routing.RegisterRoute(nameof(MyAccountPage), typeof(MyAccountPage));
         }
