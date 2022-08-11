@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlogTemplate.Models;
 
-namespace EcommerceTemplate.DataStores.MockDataStore
+namespace BlogTemplate.DataStores.MockDataStore
 {
     /// <summary>
     /// Base class that performs basic CRUD operations.

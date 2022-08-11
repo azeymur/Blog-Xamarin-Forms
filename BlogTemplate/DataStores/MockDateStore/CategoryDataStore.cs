@@ -2,9 +2,8 @@
 using BlogTemplate.MaterialDesign;
 using BlogTemplate.Models;
 using BlogTemplate.Resources;
-using EcommerceTemplate.DataStores.MockDataStore;
 
-namespace BlogTemplate.DataStores.MockDateStore
+namespace BlogTemplate.DataStores.MockDataStore
 {
     /// <summary>
     /// Mock data store with fake entities to test.

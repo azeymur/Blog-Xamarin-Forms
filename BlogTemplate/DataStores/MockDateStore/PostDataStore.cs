@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BlogTemplate.Models;
-using EcommerceTemplate.DataStores.MockDataStore;
 
-namespace BlogTemplate.DataStores.MockDateStore
+namespace BlogTemplate.DataStores.MockDataStore
 {
     /// <summary>
     /// Mock data store with fake entities to test.

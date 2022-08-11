@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 using BlogTemplate.Services;
-using BlogTemplate.DataStores.MockDateStore;
+using BlogTemplate.DataStores.MockDataStore;
 
 namespace BlogTemplate
 {
